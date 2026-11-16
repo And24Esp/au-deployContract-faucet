@@ -43,23 +43,22 @@ the deployment will not persist after the command exits.
 
 ## Deploy to Sepolia
 
-The Sepolia network in [`hardhat.config.ts`](./hardhat.config.ts) uses the
-Hardhat configuration variables `TEST_API_KEY` (the RPC URL) and
-`TEST_PRIVATE_KEY` (the funded deployer account's private key). Set them using
-the Hardhat keystore:
+The Sepolia network in [`hardhat.config.ts`](./hardhat.config.ts) reads
+`TEST_API_KEY` (the RPC URL) and `TEST_PRIVATE_KEY` (the funded deployer
+account's private key) from a `.env` file in the project root. For example:
 
 ```shell
-npx hardhat keystore set TEST_API_KEY
-npx hardhat keystore set TEST_PRIVATE_KEY
+TEST_API_KEY=https://your-sepolia-rpc-url
+TEST_PRIVATE_KEY=0xyour-private-key
 ```
 
-Then deploy:
+Keep `.env` out of version control and never share or commit your private key.
+Make sure the account has Sepolia ETH for gas. Then deploy:
 
 ```shell
 npx hardhat run scripts/deploy.js --network sepolia
 ```
 
-Keep the private key secret, and make sure the account has Sepolia ETH for gas.
 After deployment, send ETH to the printed contract address to fund the faucet.
 
 ## Tests
@@ -67,3 +66,8 @@ After deployment, send ETH to the printed contract address to fund the faucet.
 The repository currently has a `Counter` example test in `test/Counter.ts`;
 it does not test the Faucet contract. Faucet-specific automated tests have not
 yet been added.
+
+## Deployment to Sepolia Network
+The contract in this project was deployed to the Sepolia Network on Nov 16th.
+Faucet address: 0x4B6A7A871B0674E59283395E997795E150F96001 
+URL: https://sepolia.etherscan.io/address/0x4B6A7A871B0674E59283395E997795E150F96001 
