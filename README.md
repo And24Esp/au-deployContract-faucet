@@ -82,6 +82,27 @@ The funding account needs enough Sepolia ETH to cover both the transfer and gas.
 The confirmed transaction hash links to Sepolia Etherscan, where you can check
 the actual gas used and fee.
 
+### Withdraw from the Faucet
+
+Run the withdrawal script:
+
+```shell
+npx hardhat run scripts/withdraw-faucet.js --network sepolia
+```
+
+Enter an amount in ETH (up to `0.1` per call). The script checks the faucet
+balance, estimates the gas fee, and asks for confirmation before submitting the
+withdrawal. The ETH is sent to the account configured by `TEST_PRIVATE_KEY`,
+which also pays the gas fee. Make sure this is the wallet you want to receive
+the funds; the contract sends withdrawals to the caller and does not accept a
+separate recipient address.
+
+  NOTE: In Etherscan, the transaction perse will not reflect the withdrawal/retrieval ammounts (displays a zero for both faucet and receiver), even if the operation was succesful and the address balance did update accordingly.
+
+  The script will call withdraw(amount) with zero ETH attached; the amount is an argument to the function, and the contract then transfers that ETH to the caller during execution. So Etherscan’s main transaction “Value” can show 0 ETH, even though the wallet balance increases.
+
+  The transfer may appear under Internal Transactions if Etherscan has a trace for it. This contract doesn’t emit a withdrawal event, so there may not be a clear withdrawal entry on the transaction page. If the transaction succeeded and your wallet balance updated, the withdrawal went through.
+
 ## About curent state of Tests
 
 The repository currently has a `Counter` example test in `test/Counter.ts`;
