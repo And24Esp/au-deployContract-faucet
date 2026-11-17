@@ -59,15 +59,31 @@ Make sure the account has Sepolia ETH for gas. Then deploy:
 npx hardhat run scripts/deploy.js --network sepolia
 ```
 
-After deployment, send ETH to the printed contract address to fund the faucet.
+### PD: Actual deployment event to Sepolia Network
+The contract in this project was already deployed to the Sepolia Network on Nov 16th.
 
-## Tests
+Faucet address: 0x4B6A7A871B0674E59283395E997795E150F96001
+
+URL: https://sepolia.etherscan.io/address/0x4B6A7A871B0674E59283395E997795E150F96001 
+
+After deployment, use the funding script to send ETH from the configured
+`TEST_PRIVATE_KEY` account to the faucet:
+
+```shell
+npx hardhat run scripts/fund-faucet.js --network sepolia
+```
+
+The script prompts for the destination address (defaulting to this project's
+deployed Faucet address), the amount in ETH, and confirmation before sending. It
+also estimates the gas units and fee and includes the fee estimate in the
+confirmation prompt. When the RPC provides `maxFeePerGas`, this is a maximum
+fee estimate; the actual fee can be lower and may vary with network conditions.
+The funding account needs enough Sepolia ETH to cover both the transfer and gas.
+The confirmed transaction hash links to Sepolia Etherscan, where you can check
+the actual gas used and fee.
+
+## About curent state of Tests
 
 The repository currently has a `Counter` example test in `test/Counter.ts`;
 it does not test the Faucet contract. Faucet-specific automated tests have not
 yet been added.
-
-## Deployment to Sepolia Network
-The contract in this project was deployed to the Sepolia Network on Nov 16th.
-Faucet address: 0x4B6A7A871B0674E59283395E997795E150F96001 
-URL: https://sepolia.etherscan.io/address/0x4B6A7A871B0674E59283395E997795E150F96001 
